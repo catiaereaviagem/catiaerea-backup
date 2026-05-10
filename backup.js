@@ -1,5 +1,3 @@
-$ cat /Users/edson/Downloads/catiaerea-backup/backup.js
-
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 
