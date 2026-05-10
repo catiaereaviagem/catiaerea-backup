@@ -1,0 +1,26 @@
+name: Backup Semanal CatiAérea
+
+on:
+  schedule:
+    - cron: '0 11 * * 0'  # Todo domingo às 8h (horário de Brasília = 11h UTC)
+  workflow_dispatch:       # Permite rodar manualmente também
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependências
+        run: npm install nodemailer
+
+      - name: Executar backup
+        env:
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+        run: node backup.js
